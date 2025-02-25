@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqynctnu2q42v"]
+[gd_scene load_steps=10 format=3 uid="uid://bqynctnu2q42v"]
 
 [ext_resource type="Script" path="res://scripts/character_body_3d.gd" id="1_3wmgt"]
-[ext_resource type="Script" path="res://scripts/camera_3d.gd" id="1_b74b2"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3o2kr"]
 size = Vector3(50, 0.5, 10)
@@ -15,12 +14,24 @@ size = Vector3(50, 0.5, 10)
 
 [sub_resource type="SphereMesh" id="SphereMesh_x8mbt"]
 
-[node name="Level1" type="Node3D"]
+[sub_resource type="GDScript" id="GDScript_mltux"]
+script/source = "extends Camera3D
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.999602, 0, -0.0282182, 0.0137579, 0.873092, 0.487361, 0.0246371, -0.487555, 0.872745, 0, 3.23414, 6.95948)
-script = ExtResource("1_b74b2")
-focus_target = null
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass # Replace with function body.
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q4lka"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vyy74"]
+
+[node name="Level1" type="Node3D"]
 
 [node name="Floor" type="StaticBody3D" parent="."]
 metadata/_edit_group_ = true
@@ -32,10 +43,10 @@ mesh = SubResource("BoxMesh_3o2kr")
 shape = SubResource("BoxShape3D_soc83")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.576461, 0.817125, 0, -0.817125, 0.576461, 0, 4.2762, 4.96921)
+transform = Transform3D(-0.109437, -0.357967, 0.927299, 0.27425, 0.885817, 0.37432, -0.955411, 0.295276, 0.00123156, 27.0144, 4.4345, 1.15762)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.356446, 1.61873, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.9452, 1.61873, 0)
 script = ExtResource("1_3wmgt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
@@ -46,3 +57,18 @@ texture = SubResource("ImageTexture_8h1gf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 mesh = SubResource("SphereMesh_x8mbt")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(0.999602, 2.79286e-08, -0.0282182, 0.0137579, 0.873092, 0.487361, 0.0246371, -0.487555, 0.872745, 0.356446, 1.61541, 6.95948)
+script = SubResource("GDScript_mltux")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 5, -18.559, 0.756254, 1.71332)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/StaticBody3D"]
+shape = SubResource("BoxShape3D_q4lka")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node/StaticBody3D"]
+mesh = SubResource("BoxMesh_vyy74")
